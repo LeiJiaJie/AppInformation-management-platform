@@ -1,0 +1,129 @@
+* {
+	margin: 0px; padding: 0px;
+}
+body {
+	font: 12px/20px Tahoma; font-size-adjust: none; font-stretch: normal;
+}
+table {
+	border-collapse: collapse;
+}
+img {
+	border: 0px currentColor;
+}
+li {
+	list-style: none;
+}
+a {
+	color: rgb(51, 51, 51); text-decoration: underline;
+}
+a:hover {
+	color: rgb(255, 0, 0); text-decoration: underline;
+}
+#header {
+	background: url("../images/topbg.gif") repeat-x; margin: 15px auto 0px; border: 1px solid rgb(223, 223, 223); width: 947px; height: 116px; clear: both;
+}
+#welcome {
+	padding: 6px 0px 0px 10px; height: 30px;
+}
+#nav {
+	padding: 0px 10px; clear: both;
+}
+#logo {
+	background: rgb(255, 0, 0); float: left;
+}
+#a_b01 {
+	background: rgb(255, 0, 0); margin: 4px 0px 0px; width: 781px; float: right;
+}
+#admin_bar {
+	background: url("../images/admin_bar.gif") repeat-x; border-width: 0px 1px 1px; border-style: none solid solid; border-color: currentColor rgb(213, 217, 218) rgb(213, 217, 218); margin: 14px auto 0px; width: 947px; height: 25px; clear: both;
+}
+#status {
+	padding: 2px 0px 0px 20px; width: 550px; float: left;
+}
+#channel {
+	width: 360px; float: right;
+}
+#channel li {
+	background: url("../images/channel_bg.gif") no-repeat; margin: 0px 3px; width: 66px; height: 22px; text-align: center; line-height: 22px; float: left;
+}
+#channel li a {
+	color: rgb(42, 54, 104); text-decoration: none;
+}
+#channel li a:hover {
+	color: rgb(255, 102, 0); text-decoration: underline;
+}
+#channel li#name {
+	width: auto;
+}
+#main {
+	margin: 14px auto 0px; width: 947px; height: 100%; overflow: hidden; clear: both;
+}
+#opt_list {
+	padding: 10px 0px 0px 14px; width: 130px; float: left;
+}
+#opt_area {
+	margin: 14px 0px 0px; width: 770px; float: right;
+}
+#opt_type {
+	background: url("../images/opt_name.gif") no-repeat; font: 600 14px/24px Arial; margin: 0px 0px 20px; padding: 4px 0px 0px 18px; height: 28px; font-size-adjust: none; font-stretch: normal;
+}
+#opt_area p {
+	margin: 10px 0px;
+}
+.opt_input {
+	border: 1px solid rgb(153, 153, 153); width: 200px; height: 18px; line-height: 18px; margin-left: 6px;
+}
+.opt_sub {
+	background: url("../images/opt_sub.gif") repeat-x; font: 12px/25px Arial; padding: 0px 6px; border: 1px solid rgb(206, 206, 208); height: 25px; text-align: center; letter-spacing: 3px; font-size-adjust: none; font-stretch: normal;
+}
+.classlist {
+	clear: both; margin-top: 10px;
+}
+.classlist li {
+	background: url("../images/arrow.gif") no-repeat 0px 10px; padding: 0px 130px 0px 8px; line-height: 22px; position: relative;
+}
+.classlist li.space {
+	height: 22px;
+}
+.classlist li span {
+	top: -1px; right: 16px; position: absolute;
+}
+#site_link {
+	background: rgb(227, 227, 227); margin: 35px auto 0px; width: 947px; height: 26px; text-align: center; line-height: 28px; clear: both; border-top-color: rgb(12, 126, 178); border-top-width: 2px; border-top-style: solid;
+}
+#site_link a {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+#site_link a:hover {
+	color: rgb(255, 0, 0); text-decoration: underline;
+}
+#site_link span {
+	margin: 0px 6px;
+}
+#friend {
+	margin: 0px auto; width: 947px; height: 140px; clear: both;
+}
+.friend_t {
+	background: url("../images/friend_t.gif") repeat-x; padding: 4px 0px 0px 10px; border: 1px solid rgb(179, 183, 186); height: 24px;
+}
+.friend_list {
+	background: url("../images/firend_bg.gif") repeat-x; border-width: 0px 1px 1px; border-style: none solid solid; border-color: currentColor rgb(191, 208, 213) rgb(191, 208, 213); height: 110px; overflow: hidden;
+}
+.friend_list ul {
+	margin: 14px 10px 0px;
+}
+.friend_list li {
+	margin-right: 10px; float: left; white-space: nowrap;
+}
+#footer {
+	margin: 14px auto 0px; width: 947px; text-align: center; clear: both;
+}
+#footer p {
+	font: 14px/24px Arial; color: rgb(153, 153, 153); font-size-adjust: none; font-stretch: normal;
+}
+#footer p.copyright {
+	color: rgb(51, 51, 51); margin-top: 15px;
+}
+textarea {
+	font: 12px/20px Tahoma; font-size-adjust: none; font-stretch: normal;
+}
