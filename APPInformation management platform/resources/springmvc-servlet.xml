@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+   <!-- 给这个控制配置一个路径 
+   <bean name="/index.html" class="com.controller.IndexController"></bean>
+   -->
+   
+   <!-- 如果要想加载css这些静态文件，就要如下配置 -->
+   <mvc:resources location="/statics/" mapping="/statics/**"></mvc:resources>
+   
+   <!-- 使用注解的方式来实现给控制器添加路径 -->
+   <context:component-scan base-package="com.controller"></context:component-scan>
+   
+   <!-- 配置返回(视图解析器) -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+   		<!-- 配置一个前缀 -->
+   		<property name="prefix" value="/WEB-INF/jsp/"></property>
+   		<!-- 配置一个后缀 -->
+   		<property name="suffix" value=".jsp"></property>
+   </bean>
+   
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   		<property name="maxUploadSize" value="5000000"></property>
+   		<property name="defaultEncoding" value="UTF-8"></property>
+   </bean>
+   
+    <!-- 配置消息转换器 -->
+    <mvc:annotation-driven>
+    	<mvc:message-converters>
+    		<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+    			<property name="supportedMediaTypes">
+    				<list>
+    					<value>application/json;charset=UTF-8</value>
+    				</list>
+    			</property>
+    		</bean>
+    		<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+    			<property name="supportedMediaTypes">
+    				<list>
+    					<value>text/html;charset=UTF-8</value>
+    					<value>application/json</value>
+    				</list>
+    			</property>
+    			<property name="features">
+    				<list>
+    					<value>WriteDateUseDateFormat</value>
+    				</list>
+    			</property>
+    		</bean>
+    	</mvc:message-converters>
+    </mvc:annotation-driven>
+</beans>
