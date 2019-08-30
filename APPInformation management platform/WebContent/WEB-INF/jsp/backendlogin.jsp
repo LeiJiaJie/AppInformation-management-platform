@@ -49,7 +49,7 @@
               <div class="clearfix"></div>
 
               <div class="separator">
-                <div>
+                <div> 
                   <p>©2016 All Rights Reserved. </p>
                 </div>
               </div>
