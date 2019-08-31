@@ -24,7 +24,11 @@ public class Usercontroller {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="dologin")
+	@RequestMapping("/openlogin")
+	public String openlogin() {
+	   return "devlogin";
+	}
+	@RequestMapping(value="/dologin")
 	public String login(String devCode,String devPassword,HttpSession session) {
 		DevUser devUser = userService.login(devCode, devPassword);
 		if(devUser!=null) {
@@ -43,6 +47,6 @@ public class Usercontroller {
 		if(session.getAttribute("devUserSession")!=null) {
 			session = null;
 		}
-		return "devlogin";
+		return "redirect:/user/openlogin";
 	}
 }
