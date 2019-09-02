@@ -41,4 +41,14 @@ public interface dictionaryMapper {
 			@Param("queryCategoryLevel1")Integer queryCategoryLevel1,
 			@Param("queryCategoryLevel2")Integer queryCategoryLevel2,
 			@Param("queryCategoryLevel3")Integer queryCategoryLevel3);
+	
+	/**
+	 *  查询APKName是否重复
+	 */
+	public int selectAPK(@Param("APKName")String APKName);
+	
+	/**
+	 * 新增APP基础信息
+	 */
+	public int insertAPP(AppInfo appInfo);
 }

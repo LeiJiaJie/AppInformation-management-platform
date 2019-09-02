@@ -21,7 +21,7 @@ $(function(){
 	$.ajax({
 		type:"GET",//请求类型
 		url:"categorylevellist.json",//请求的url
-		data:{pid:null},//请求参数
+		data:{pid:0},//请求参数
 		dataType:"json",//ajax接口（请求url）返回的数据类型
 		success:function(data){//data：返回数据（json对象）
 			$("#categoryLevel1").html("");

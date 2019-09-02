@@ -71,5 +71,27 @@ public class dictionaryserviceimpl implements dictionaryservice{
 		}
 		return mun;
 	}
+
+	@Override
+	public int selectAPK(String APKName) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.selectAPK(APKName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public int insertAPP(AppInfo appInfo) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.insertAPP(appInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
 	
 }

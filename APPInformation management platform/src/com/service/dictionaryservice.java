@@ -39,4 +39,13 @@ public interface dictionaryservice {
 			Integer queryCategoryLevel2,
 			Integer queryCategoryLevel3);
 	
+	/**
+	 *  查询APKName是否重复
+	 */
+	public int selectAPK(@Param("APKName")String APKName);
+	
+	/**
+	 * 新增APP基础信息
+	 */
+	public int insertAPP(AppInfo appInfo);
 }

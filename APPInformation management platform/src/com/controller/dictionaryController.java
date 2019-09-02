@@ -1,14 +1,25 @@
 package com.controller;
 
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.pojo.AppCategory;
@@ -106,4 +117,87 @@ public class dictionaryController {
 		List<AppCategory> list3 = dictionaryservice.selectCategory(pid);
 		return JSON.toJSONString(list3);
 	}
+	
+	@RequestMapping("add")
+	public String Add() {
+		return "developer/appinfoadd";
+	}
+	
+	@RequestMapping("datadictionarylist.json")
+	@ResponseBody
+	public Object categorylevellist(String tcode) {
+		List<DataDictionary> list2 = dictionaryservice.selectDictionary("所属平台");
+		return JSON.toJSONString(list2);
+	}
+	
+	@RequestMapping("apkexist.json")
+	@ResponseBody
+	public Object apkexist(String APKName) {
+		Map<String, String> map = new HashMap<String, String>();
+		if(APKName == null) {
+			map.put("APKName", "empty");
+		}else if(dictionaryservice.selectAPK(APKName)>0) {
+			map.put("APKName", "exist");
+		}else {
+			map.put("APKName", "noexist");
+		}
+		return map;
+	}
+	
+	@RequestMapping(value="appinfoaddsave",method=RequestMethod.POST)
+	public String appinfoadd(AppInfo Info,@RequestParam(value="a_logoPicPath",required=false)MultipartFile attach,
+			HttpSession session,
+			HttpServletRequest request) {
+		String idPicPath = null;		//照片的路径
+		//判断文件是否为空
+		if(!attach.isEmpty()){
+			//设置你要保存的路径
+			String path = request.getSession().getServletContext().getRealPath("statics" + File.separator + "uploadfiles");
+			logger.debug("path========>" + path);
+			String oldFileName = attach.getOriginalFilename();		//原文件名
+			logger.debug("oldFileName========>" + oldFileName);
+			String prefix = FilenameUtils.getExtension(oldFileName);	//源文件后缀
+			
+			int filesize = 500000;
+			logger.debug("oldFileName========>" + attach.getSize());
+			if(attach.getSize() > filesize){
+				request.setAttribute("uploadFileError", "上传大小不能超过500KB");
+				return "useradd";
+			} else if(prefix.equalsIgnoreCase("jpg") || prefix.equalsIgnoreCase("png") ||
+					prefix.equalsIgnoreCase("jpeg") || prefix.equalsIgnoreCase("pneg")) {
+				//文件的新名称
+				String fileName = System.currentTimeMillis() + RandomUtils.nextInt(1000000) + "_Personal.jpg";
+				logger.debug("fileName========>" + fileName);
+				File targetFile = new File(path,fileName);
+				if(!targetFile.exists()){
+					targetFile.mkdirs();
+				}
+				//保存
+				try {
+					attach.transferTo(targetFile);
+				} catch (Exception e) {
+					e.printStackTrace();
+					request.setAttribute("uploadFileError", "文件上传失败！");
+					return "useradd";
+				}
+				//这是要保存到数据库的
+				idPicPath = path+File.separator + fileName;
+			} else {
+				request.setAttribute("uploadFileError", "文件格式不正确！");
+				return "useradd";
+			}
+			
+		}
+		//调用保存的方法，实现保存
+		Info.setCreationDate(new Date());
+		Info.setLogoLocPath(idPicPath);
+		String str = idPicPath;
+        String logoPicPath = str.substring(str.lastIndexOf("/")+73,str.length());
+        Info.setLogoPicPath(logoPicPath);
+		if(dictionaryservice.insertAPP(Info)>0) {
+			return "redirect:/dictionary/list";
+		}
+		return "redirect:/dictionary/add";
+	}
+	
 }

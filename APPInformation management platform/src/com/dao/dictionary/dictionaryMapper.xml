@@ -39,4 +39,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="queryCategoryLevel2 !=''">and categoryLevel2 = #{queryCategoryLevel2}</if>
 		<if test="queryCategoryLevel3 !=''">and categoryLevel3 = #{queryCategoryLevel3}</if>
 	</select>
+	
+	<select id="selectAPK" resultType="Integer">
+		select count(1) from app_info where APKName = #{APKName}
+	</select>
+	
+	<insert id="insertAPP">
+insert into app_info (softwareName,APKName,supportROM,interfaceLanguage,downloads,flatformId,categoryLevel1,categoryLevel2,categoryLevel3,status,appInfo,logoPicPath,logoLocPath,createdBy,creationDate,softwareSize) 
+        values (#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{downloads},#{flatformId},#{categoryLevel1},#{categoryLevel2},#{categoryLevel3},#{status},#{appInfo},#{logoPicPath},#{logoLocPath},#{createdBy},#{creationDate},#{softwareSize})
+	</insert>
+	
 </mapper>
