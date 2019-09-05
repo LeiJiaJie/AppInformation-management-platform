@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.pojo.AppCategory;
 import com.pojo.AppInfo;
+import com.pojo.AppVersion;
 import com.pojo.DataDictionary;
 
 public interface dictionaryservice {
@@ -42,10 +43,47 @@ public interface dictionaryservice {
 	/**
 	 *  查询APKName是否重复
 	 */
-	public int selectAPK(@Param("APKName")String APKName);
+	public int selectAPK(String APKName);
 	
 	/**
 	 * 新增APP基础信息
 	 */
 	public int insertAPP(AppInfo appInfo);
+	
+	/**
+	 * 通过ID查询APP基础信息
+	 */
+	public AppInfo selectAppId(int id);
+	/**
+	 * 更新App版本信息
+	 */
+	public int UpdateApp(AppInfo appInfo);
+	/**
+	 * 删除App基础信息
+	 */
+	public int delectApp(int id);
+	/**
+	 * 上下架App操作
+	 */
+	public int Update(@Param("id")int id,@Param("status")int status);
+	/**
+	 * 通过AppId查询App版本信息
+	 */
+	public List<AppVersion> SelectAppVersion(@Param("AppId")int AppId);
+	/**
+	 * 新增App版本信息
+	 */
+	public int insertAppVersion(AppVersion appVersion);
+	/**
+	 * 查询最新版本信息
+	 */
+	public AppVersion SelectVersion(@Param("AppId")int AppId);
+	/**
+	 * 更新最新版本信息
+	 */
+	public int UpdateVersion(AppVersion appVersion);
+	/**
+	 * 更新最新版本
+	 */
+	public int updateApp(@Param("versionId")String versionId,@Param("id") int id);
 }

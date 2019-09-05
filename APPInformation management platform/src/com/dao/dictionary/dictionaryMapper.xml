@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.dictionary.dictionaryMapper">
 	<select id="selectDictionary" resultType="DataDictionary">
-		select * from data_dictionary where typeName = #{typeName}
+		select * from data_dictionary where typeCode = #{typeName}
 	</select>
 	
 	<select id="selectCategory" resultType="AppCategory">
@@ -45,8 +45,80 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insertAPP">
-insert into app_info (softwareName,APKName,supportROM,interfaceLanguage,downloads,flatformId,categoryLevel1,categoryLevel2,categoryLevel3,status,appInfo,logoPicPath,logoLocPath,createdBy,creationDate,softwareSize) 
+		insert into app_info (softwareName,APKName,supportROM,interfaceLanguage,downloads,flatformId,categoryLevel1,categoryLevel2,categoryLevel3,status,appInfo,logoPicPath,logoLocPath,createdBy,creationDate,softwareSize) 
         values (#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{downloads},#{flatformId},#{categoryLevel1},#{categoryLevel2},#{categoryLevel3},#{status},#{appInfo},#{logoPicPath},#{logoLocPath},#{createdBy},#{creationDate},#{softwareSize})
 	</insert>
 	
+	<select id="selectAppId" resultType="AppInfo">
+		select *,(SELECT valueName FROM data_dictionary d WHERE  a.status=d.valueId AND d.typeCode='APP_STATUS') as statusName,
+		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel1) as categoryLevel1Name,
+		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel2) as categoryLevel2Name,
+		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel3) as categoryLevel3Name
+		from app_info as a where id = #{id}
+		
+	</select>
+	
+	<update id="updateAPP">
+		UPDATE app_info
+		<set>
+		<if test="softwareName != null">softwareName = #{softwareName},</if> 
+		<if test="supportROM != null">supportROM = #{supportROM},</if> 
+		<if test="interfaceLanguage != null">interfaceLanguage = #{interfaceLanguage},</if> 
+		<if test="softwareSize != null">softwareSize = #{softwareSize},</if> 
+		<if test="downloads != null">downloads = #{downloads},</if> 
+		<if test="flatformId != null">flatformId = #{flatformId},</if> 
+		<if test="categoryLevel1 != null">categoryLevel1 = #{categoryLevel1},</if> 
+		<if test="categoryLevel2 != null">categoryLevel2 = #{categoryLevel2},</if> 
+		<if test="categoryLevel3 != null">categoryLevel3 = #{categoryLevel3},</if> 
+		<if test="appInfo != null">appInfo = #{appInfo},</if> 
+		<if test="logoLocPath == null">logoLocPath = NULL,</if> 
+		<if test="logoPicPath == null">logoPicPath = NULL,</if>
+		<if test="status == 1">status = #{status}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delectApp">
+		delete from app_info where id = #{id}
+	</delete>
+	
+	<update id="Update">
+		update app_info set status = #{status} where id = #{id}
+	</update>
+	
+	<select id="SelectAppVersion" resultType="AppVersion">
+		select *,(SELECT softwareName FROM app_info as a WHERE a.id = p.appId) AS appName,
+		(SELECT valueName FROM data_dictionary d WHERE  p.publishStatus=d.valueId AND d.typeCode='PUBLISH_STATUS') as publishStatusName
+		from app_version as p where appId =#{AppId}
+	</select>
+	
+	<insert id="insertAppVersion">
+		insert into app_version(appId,versionNo,versionSize,publishStatus,versionInfo,downloadLink,apkLocPath,apkFileName,createdBy,creationDate,modifyDate)
+		values(#{appId},#{versionNo},#{versionSize},#{publishStatus},#{versionInfo},#{downloadLink},#{apkLocPath},#{apkFileName},#{createdBy},#{creationDate},#{modifyDate})
+	</insert>
+	
+	<select id="SelectVersion" resultType="AppVersion">
+		select  *,(SELECT softwareName FROM app_info as a WHERE a.id = p.appId) AS appName,
+		(SELECT valueName FROM data_dictionary d WHERE  p.publishStatus=d.valueId AND d.typeCode='PUBLISH_STATUS') as publishStatusName
+		from app_version as p where appId = #{AppId} ORDER BY creationDate DESC LIMIT 0,1
+	</select>
+	
+	<update id="UpdateVersion">
+		update app_version
+			 <trim prefix="set" suffixOverrides="," suffix="where id = #{id}">
+		 		<if test="versionNo != null || versionNo != ''">versionNo=#{versionNo},</if>
+				<if test="versionSize != null || versionSize != ''">versionSize=#{versionSize},</if>
+				<if test="versionInfo != null || versionInfo != ''">versionInfo=#{versionInfo},</if>
+				<if test="modifyBy != null || modifyBy != ''">modifyBy=#{modifyBy},</if>
+				<if test="modifyDate !=null || modifyDate !=null">modifyDate=#{modifyDate}</if>
+			 </trim>
+	</update>
+	
+	<update id="updateApp">
+		update app_info
+		<set>
+			versionId = #{versionId}
+		</set>
+		where id = #{id}
+	</update>
 </mapper>

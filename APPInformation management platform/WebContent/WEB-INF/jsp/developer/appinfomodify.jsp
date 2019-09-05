@@ -10,7 +10,7 @@
              <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <form class="form-horizontal form-label-left" action="appinfomodifysave" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal form-label-left" action="../appinfomodifysave" method="post" enctype="multipart/form-data">
           <input type="hidden" name="id" id="id" value="${appInfo.id}">
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
@@ -120,6 +120,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
+            <h1>${appInfo.logoPicPath}</h1>
 				<input type="hidden" id="logoPicPath" name="logoPicPath" value="${appInfo.logoPicPath}"/>
             	<input type="hidden" id="logoLocPath" name="logoLocPath" value="${appInfo.logoLocPath}"/>
 				<div id="uploadfile" style="display: none">

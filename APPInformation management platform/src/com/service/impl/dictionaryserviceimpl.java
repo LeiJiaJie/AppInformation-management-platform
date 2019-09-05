@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.dao.dictionary.dictionaryMapper;
 import com.pojo.AppCategory;
 import com.pojo.AppInfo;
+import com.pojo.AppVersion;
 import com.pojo.DataDictionary;
 import com.service.dictionaryservice;
 @Service("dictionaryservice")
@@ -88,6 +89,105 @@ public class dictionaryserviceimpl implements dictionaryservice{
 		int mun = 0;
 		try {
 			mun = dictionaryMapper.insertAPP(appInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public AppInfo selectAppId(int id) {
+		AppInfo appInfo = null;
+		try {
+			appInfo = dictionaryMapper.selectAppId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return appInfo;
+	}
+
+	@Override
+	public int UpdateApp(AppInfo appInfo) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.updateAPP(appInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public int delectApp(int id) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.delectApp(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public int Update(int id, int status) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.Update(id, status);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public List<AppVersion> SelectAppVersion(int AppId) {
+		List<AppVersion> list = null;
+		try {
+			list = dictionaryMapper.SelectAppVersion(AppId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int insertAppVersion(AppVersion appVersion) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.insertAppVersion(appVersion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public AppVersion SelectVersion(int AppId) {
+		AppVersion list = null;
+		try {
+			list = dictionaryMapper.SelectVersion(AppId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int UpdateVersion(AppVersion appVersion) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.UpdateVersion(appVersion);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mun;
+	}
+
+	@Override
+	public int updateApp(String versionId, int id) {
+		int mun = 0;
+		try {
+			mun = dictionaryMapper.updateApp(versionId, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

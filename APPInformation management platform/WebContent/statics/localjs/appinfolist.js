@@ -63,7 +63,7 @@ $("#queryCategoryLevel2").change(function(){
 
 $(".addVersion").on("click",function(){
 	var obj = $(this);
-	window.location.href="appversionadd?id="+obj.attr("appinfoid");
+	window.location.href="appversionadd/"+obj.attr("appinfoid");
 });
 $(".modifyVersion").on("click",function(){
 	var obj = $(this);
@@ -74,7 +74,7 @@ $(".modifyVersion").on("click",function(){
 		if(versionid == null || versionid == ""){
 			alert("该APP应用无版本信息，请先增加版本信息！");
 		}else{
-			window.location.href="appversionmodify?vid="+ versionid + "&aid="+ appinfoid;
+			window.location.href="appversionmodify/"+ versionid + "/"+ appinfoid;
 		}
 	}else{
 		alert("该APP应用的状态为：【"+obj.attr("statusname")+"】,不能修改其版本信息，只可进行【新增版本】操作！");
@@ -84,7 +84,7 @@ $(".modifyAppInfo").on("click",function(){
 	var obj = $(this);
 	var status = obj.attr("status");
 	if(status == "1" || status == "3"){//待审核、审核未通过状态下才可以进行修改操作
-		window.location.href="appinfomodify?id="+ obj.attr("appinfoid");
+		window.location.href="appinfomodify/"+ obj.attr("appinfoid");
 	}else{
 		alert("该APP应用的状态为：【"+obj.attr("statusname")+"】,不能修改！");
 	}
@@ -105,9 +105,10 @@ $(document).on("click",".saleSwichOpen,.saleSwichClose",function(){
 
 var saleSwitchAjax = function(appId,obj){
 	$.ajax({
-		type:"PUT",
-		url:appId+"/sale.json",
+		type:"GET",
+		url:"sale.json",
 		dataType:"json",
+		data:{id:appId},//请求参数
 		success:function(data){
 			/*
 			 * resultMsg:success/failed
@@ -115,10 +116,11 @@ var saleSwitchAjax = function(appId,obj){
 			 * appId:appId
 			 * errorCode:param000001
 			 */
+			
 			if(data.errorCode === '0'){
 				if(data.resultMsg === "success"){//操作成功
 					if("open" === obj.attr("saleSwitch")){
-						//alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【上架】操作成功");
+						alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【上架】操作成功");
 						$("#appInfoStatus" + obj.attr("appinfoid")).html("已上架");
 						obj.className="saleSwichClose";
 						obj.html("下架");
@@ -132,7 +134,7 @@ var saleSwitchAjax = function(appId,obj){
 						$("#appInfoStatus" + obj.attr("appinfoid")).hide();
 						$("#appInfoStatus" + obj.attr("appinfoid")).slideDown(300);
 					}else if("close" === obj.attr("saleSwitch")){
-						//alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【下架】操作成功");
+						alert("恭喜您，【"+obj.attr("appsoftwarename")+"】的【下架】操作成功");
 						$("#appInfoStatus" + obj.attr("appinfoid")).html("已下架");
 						obj.className="saleSwichOpem";
 						obj.html("上架");

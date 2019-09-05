@@ -24,5 +24,4 @@ public class UserServiceimpl implements UserService {
 		}
 		return devUser;
 	}
-
 }
