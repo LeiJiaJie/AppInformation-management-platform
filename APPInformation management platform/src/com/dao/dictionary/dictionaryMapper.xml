@@ -20,13 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel2) as categoryLevel2Name,a.categoryLevel3,
 	(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel3) as categoryLevel3Name,a.downloads,a.onSaleDate,a.versionId,
 	(SELECT v.versionNo FROM app_version v where v.id=a.versionId ) as versionNo
-	FROM app_info a where 1=1
+	FROM app_info a where 1=1 
 	<if test="querySoftwareName !=''">and softwareName like "%"#{querySoftwareName}"%"</if>
 	<if test="queryStatus !=''">and status = #{queryStatus}</if>
 	<if test="queryFlatformId !=''">and flatformId = #{queryFlatformId}</if>
 	<if test="queryCategoryLevel1 !=''">and categoryLevel1 = #{queryCategoryLevel1}</if>
 	<if test="queryCategoryLevel2 !=''">and categoryLevel2 = #{queryCategoryLevel2}</if>
 	<if test="queryCategoryLevel3 !=''">and categoryLevel3 = #{queryCategoryLevel3}</if>
+	<if test="userTypeName != null">and status = 1</if>
 	LIMIT #{currentpageNo},#{pageSize}
 	</select>
 	
@@ -38,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="queryCategoryLevel1 !=''">and categoryLevel1 = #{queryCategoryLevel1}</if>
 		<if test="queryCategoryLevel2 !=''">and categoryLevel2 = #{queryCategoryLevel2}</if>
 		<if test="queryCategoryLevel3 !=''">and categoryLevel3 = #{queryCategoryLevel3}</if>
+		<if test="userTypeName != null">and status = 1</if>
 	</select>
 	
 	<select id="selectAPK" resultType="Integer">
@@ -53,9 +55,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select *,(SELECT valueName FROM data_dictionary d WHERE  a.status=d.valueId AND d.typeCode='APP_STATUS') as statusName,
 		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel1) as categoryLevel1Name,
 		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel2) as categoryLevel2Name,
-		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel3) as categoryLevel3Name
-		from app_info as a where id = #{id}
-		
+		(SELECT categoryName FROM app_category c WHERE  c.id=a.categoryLevel3) as categoryLevel3Name,
+		(SELECT valueName FROM data_dictionary d WHERE  a.flatformId=d.valueId AND d.typeCode='APP_FLATFORM') as flatformName
+		from app_info as a where id = #{id}	
 	</select>
 	
 	<update id="updateAPP">

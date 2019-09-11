@@ -116,21 +116,6 @@
               ${appInfo.appInfo}</textarea>
             </div>
           </div>
-           <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-            <h1>${appInfo.logoPicPath}</h1>
-				<input type="hidden" id="logoPicPath" name="logoPicPath" value="${appInfo.logoPicPath}"/>
-            	<input type="hidden" id="logoLocPath" name="logoLocPath" value="${appInfo.logoLocPath}"/>
-				<div id="uploadfile" style="display: none">
-				<input id="attach"  type="file" class="form-control col-md-7 col-xs-12" name="attach">
-				<p><span style="color:red;font-weight: bold;">*注：1、大小不得超过500k.2、图片格式：jpg、png、jpeg、pneg</span></p>
-				</div>
-				<div id="logoFile"></div>
-				${fileUploadError }
-            </div>
-          </div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
             	<c:if test="${appInfo.status == 3}">

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pojo.BackendUser;
 import com.pojo.DevUser;
 import com.service.UserService;
 
@@ -28,6 +29,7 @@ public class Usercontroller {
 	public String openlogin() {
 	   return "devlogin";
 	}
+	
 	@RequestMapping(value="/dologin")
 	public String login(String devCode,String devPassword,HttpSession session) {
 		DevUser devUser = userService.login(devCode, devPassword);
@@ -44,9 +46,39 @@ public class Usercontroller {
 	 */
 	@RequestMapping(value="logout")
 	public String logout(HttpSession session) {
-		if(session.getAttribute("devUserSession")!=null) {
-			session = null;
+		if(session.getAttribute("devUserSession")!=null||session.getAttribute("userSession")!=null) {
+			session.removeAttribute("devUserSession");
+			session.removeAttribute("userSession");
 		}
-		return "redirect:/user/openlogin";
+		return "login";
 	}
+	
+	//--------------------------------------------->后台的方法
+	/**
+	 * 后台进入登录页面的方法
+	 * @return
+	 */
+	@RequestMapping("backlogin")
+	public String backlogin() {
+		return "backendlogin";
+	}
+	/**
+	 * 后台登录方法
+	 * @param devCode
+	 * @param devPassword
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/login")
+	public String dologin(String userCode,String userPassword,HttpSession session) {
+		BackendUser devUser = userService.logins(userCode, userPassword);
+		if(devUser!=null) {
+			session.setAttribute("userSession", devUser);
+			return "backend/main";
+		}
+		return "backendlogin";
+	}
+	
+	
+	
 }

@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.dao.user.userMapper;
+import com.pojo.BackendUser;
 import com.pojo.DevUser;
 import com.service.UserService;
 @Service("UserService")
@@ -23,5 +24,15 @@ public class UserServiceimpl implements UserService {
 			e.printStackTrace();
 		}
 		return devUser;
+	}
+	@Override
+	public BackendUser logins(String devCode, String devPassword) {
+		BackendUser BackendUser = null;
+		try {
+			BackendUser = userMapper.logins(devCode, devPassword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return BackendUser;
 	}
 }

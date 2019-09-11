@@ -22,23 +22,26 @@ public interface dictionaryservice {
 	/**
 	 * 查询所有的软件信息
 	 */
-	public List<AppInfo> selectList(String querySoftwareName,
-			Integer queryStatus,
-			Integer queryFlatformId,
-			Integer queryCategoryLevel1,
-			Integer queryCategoryLevel2,
-			Integer queryCategoryLevel3,
-			int currentpageNo,
-			int pageSize);
+	public List<AppInfo> selectList(@Param("querySoftwareName")String querySoftwareName,
+			@Param("queryStatus")Integer queryStatus,
+			@Param("queryFlatformId")Integer queryFlatformId,
+			@Param("queryCategoryLevel1")Integer queryCategoryLevel1,
+			@Param("queryCategoryLevel2")Integer queryCategoryLevel2,
+			@Param("queryCategoryLevel3")Integer queryCategoryLevel3,
+			@Param("currentpageNo")int currentpageNo,
+			@Param("pageSize")int pageSize,
+			@Param("userTypeName")String userTypeName);
+	
 	/**
 	 * 查询总页数
 	 */
-	public int AppInfocount(String querySoftwareName,
-			Integer queryStatus,
-			Integer queryFlatformId,
-			Integer queryCategoryLevel1,
-			Integer queryCategoryLevel2,
-			Integer queryCategoryLevel3);
+	public int AppInfocount(@Param("querySoftwareName")String querySoftwareName,
+			@Param("queryStatus")Integer queryStatus,
+			@Param("queryFlatformId")Integer queryFlatformId,
+			@Param("queryCategoryLevel1")Integer queryCategoryLevel1,
+			@Param("queryCategoryLevel2")Integer queryCategoryLevel2,
+			@Param("queryCategoryLevel3")Integer queryCategoryLevel3,
+			@Param("userTypeName")String userTypeName);
 	
 	/**
 	 *  查询APKName是否重复

@@ -49,12 +49,13 @@ public class dictionaryserviceimpl implements dictionaryservice{
 			Integer queryCategoryLevel2,
 			Integer queryCategoryLevel3,
 			int currentpageNo,
-			int pageSize) {
+			int pageSize,
+			String userTypeName) {
 		List<AppInfo> list = null;
 		try {
 			int currentPageNo = (currentpageNo - 1) * pageSize;
 			logger.debug(currentPageNo+""+pageSize);
-			list = dictionaryMapper.selectList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, currentPageNo, pageSize);
+			list = dictionaryMapper.selectList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, currentPageNo, pageSize,userTypeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,10 +64,10 @@ public class dictionaryserviceimpl implements dictionaryservice{
 
 	@Override
 	public int AppInfocount(String querySoftwareName, Integer queryStatus, Integer queryFlatformId,
-			Integer queryCategoryLevel1, Integer queryCategoryLevel2, Integer queryCategoryLevel3) {
+			Integer queryCategoryLevel1, Integer queryCategoryLevel2, Integer queryCategoryLevel3,String userTypeName) {
 		int mun = 0;
 		try {
-			mun = dictionaryMapper.AppInfocount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3);
+			mun = dictionaryMapper.AppInfocount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3,userTypeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -31,7 +31,8 @@ public interface dictionaryMapper {
 			@Param("queryCategoryLevel2")Integer queryCategoryLevel2,
 			@Param("queryCategoryLevel3")Integer queryCategoryLevel3,
 			@Param("currentpageNo")int currentpageNo,
-			@Param("pageSize")int pageSize);
+			@Param("pageSize")int pageSize,
+			@Param("userTypeName")String userTypeName);
 	
 	/**
 	 * 查询总页数
@@ -41,7 +42,8 @@ public interface dictionaryMapper {
 			@Param("queryFlatformId")Integer queryFlatformId,
 			@Param("queryCategoryLevel1")Integer queryCategoryLevel1,
 			@Param("queryCategoryLevel2")Integer queryCategoryLevel2,
-			@Param("queryCategoryLevel3")Integer queryCategoryLevel3);
+			@Param("queryCategoryLevel3")Integer queryCategoryLevel3,
+			@Param("userTypeName")String userTypeName);
 	
 	/**
 	 *  查询APKName是否重复

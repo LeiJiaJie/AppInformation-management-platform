@@ -42,7 +42,7 @@ public class dictionaryController {
 	@Autowired
 	private dictionaryservice dictionaryservice;
 	/**
-	 * 页面初始化
+	 * 前台页面初始化
 	 * @param model
 	 * @param querySoftwareName
 	 * @param queryStatus
@@ -54,7 +54,7 @@ public class dictionaryController {
 	 * @return
 	 */
 	@RequestMapping("list")
-	public String SelectList(Model model,
+	public String SelectList(Model model,HttpSession session,
 			@RequestParam(value="querySoftwareName",required=false)String querySoftwareName,
 			@RequestParam(value="queryStatus",required=false)Integer queryStatus,
 			@RequestParam(value="queryFlatformId",required=false)Integer queryFlatformId,
@@ -65,6 +65,10 @@ public class dictionaryController {
 		List<DataDictionary> list1 = dictionaryservice.selectDictionary("APP_STATUS");
 		List<DataDictionary> list2 = dictionaryservice.selectDictionary("APP_FLATFORM");
 		List<AppCategory> list3 = dictionaryservice.selectCategory(0);
+		String Appli = null;
+		if(session.getAttribute("userSession")!=null) {
+			Appli = "LjjNb";
+		}
 		int pageSize = 5;
 		//当前页码
 		int currentpageNo = 1;
@@ -96,7 +100,7 @@ public class dictionaryController {
 		}
 		
 		//总数量
-		int totalCount = dictionaryservice.AppInfocount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3);
+		int totalCount = dictionaryservice.AppInfocount(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3,Appli);
 				
 		//总页数
 		PageSupport page = new PageSupport();
@@ -111,7 +115,7 @@ public class dictionaryController {
 			currentpageNo = totalPageCount;
 		}
 	
-		List<AppInfo> list4 = dictionaryservice.selectList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, currentpageNo, pageSize);
+		List<AppInfo> list4 = dictionaryservice.selectList(querySoftwareName, queryStatus, queryFlatformId, queryCategoryLevel1, queryCategoryLevel2, queryCategoryLevel3, currentpageNo, pageSize,Appli);
 		model.addAttribute("pages", page);
 		model.addAttribute("statusList", list1);
 		model.addAttribute("flatFormList", list2);
@@ -124,6 +128,10 @@ public class dictionaryController {
 		model.addAttribute("queryCategoryLevel1", queryCategoryLevel1);
 		model.addAttribute("queryCategoryLevel2", queryCategoryLevel2);
 		model.addAttribute("queryCategoryLevel3", queryCategoryLevel3);
+		
+		if(Appli!=null) {
+			return "backend/applist";
+		}
 		return "developer/appinfolist";
 	}
 	/**
@@ -320,7 +328,6 @@ public class dictionaryController {
 				appVersion.setDownloadLink(URLDecoder.decode(appVersion.getDownloadLink(), "UTF-8"));
 				appVersion.setApkFileName(URLDecoder.decode(appVersion.getApkFileName(), "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -426,4 +433,19 @@ public class dictionaryController {
 		}
 		return "developer/appversionmodify";
 	}
+	
+	//--------------------------------------------->后台的方法
+	@RequestMapping("check/{vid}/{aid}")
+	public String listcheck(Model model,@PathVariable int vid,@PathVariable int aid) {
+		model.addAttribute("appInfo", dictionaryservice.selectAppId(vid));
+		model.addAttribute("appVersion",dictionaryservice.SelectVersion(vid));
+		return "backend/appcheck";	
+	}
+	
+	@RequestMapping("checksave")
+	public String checksave(@RequestParam(value="status",required=false)int status,@RequestParam(value="id",required=false)int id) {
+		dictionaryservice.Update(id, status);
+		return "redirect:/dictionary/list";
+	}
+	
 }

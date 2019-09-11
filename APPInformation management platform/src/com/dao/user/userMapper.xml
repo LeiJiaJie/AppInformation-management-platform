@@ -6,4 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="login" resultType="DevUser">
 		select * from dev_user where devCode = #{devCode} and devPassword = #{devPassword}
 </select>
+<select id="logins" resultType="BackendUser">
+	SELECT *,(SELECT valueName FROM data_dictionary as d WHERE b.userType = d.valueId AND typeCode = 'USER_TYPE') as userTypeName FROM backend_user as b WHERE userCode = #{userCode} and userPassword = #{userPassword}
+</select>
 </mapper>
